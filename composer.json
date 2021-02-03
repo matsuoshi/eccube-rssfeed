@@ -1,0 +1,12 @@
+{
+  "name": "ec-cube/SampleRssFeed",
+  "version": "1.0.0",
+  "description": "SampleRssFeed",
+  "type": "eccube-plugin",
+  "require": {
+    "ec-cube/plugin-installer": "~0.0.7"
+  },
+  "extra": {
+    "code": "SampleRssFeed"
+  }
+}
