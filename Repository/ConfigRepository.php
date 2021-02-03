@@ -33,4 +33,16 @@ class ConfigRepository extends AbstractRepository
     {
         return $this->find($id);
     }
+
+    /**
+     * @param int $id
+     *
+     * @return int
+     */
+    public function getFeedLength($id = 1)
+    {
+        $config = $this->get($id);
+
+        return $config ? $config->getFeedLength() : 10;
+    }
 }
