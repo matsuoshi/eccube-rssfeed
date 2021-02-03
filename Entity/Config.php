@@ -23,11 +23,11 @@ if (!class_exists('\Plugin\SampleRssFeed\Entity\Config', false)) {
         private $id;
 
         /**
-         * @var string
+         * @var int
          *
-         * @ORM\Column(name="name", type="string", length=255)
+         * @ORM\Column(name="feed_length", type="integer", options={"unsigned":true})
          */
-        private $name;
+        private $feed_length;
 
         /**
          * @return int
@@ -38,21 +38,21 @@ if (!class_exists('\Plugin\SampleRssFeed\Entity\Config', false)) {
         }
 
         /**
-         * @return string
+         * @return int
          */
-        public function getName()
+        public function getFeedLength()
         {
-            return $this->name;
+            return $this->feed_length;
         }
 
         /**
-         * @param string $name
+         * @param int $feed_length
          *
          * @return $this;
          */
-        public function setName($name)
+        public function setFeedLength(int $feed_length)
         {
-            $this->name = $name;
+            $this->feed_length = $feed_length;
 
             return $this;
         }
