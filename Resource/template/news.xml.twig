@@ -1,11 +1,20 @@
-{# 件数指定はどこでやる？ #}
-{# xmlとしてのレスポンスヘッダの設定はどこでやる？ #}
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title></title>
+        <link></link>
+        <description></description>
+        <lastBuildDate></lastBuildDate>
+        <atom:link href="" rel="self"/>
 
-{% for article in news %}
-<div>
-    {{ article.publish_date|date('Y-m-d H:i:s') }}
-    {{ article.title }}
-    <br>
-    {{ article.url }}
-</div>
-{% endfor %}
+        {% for article in news %}
+            <item>
+                <title>{{ article.title }}</title>
+                <link>{{ article.url }}</link>
+                <pubDate>{{ article.publish_date|date('Y-m-d H:i:s') }}</pubDate>
+                <guid></guid>
+                <description></description>
+            </item>
+        {% endfor %}
+    </channel>
+</rss>

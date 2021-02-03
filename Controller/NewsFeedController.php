@@ -17,6 +17,7 @@ use Eccube\Controller\AbstractController;
 use Eccube\Repository\NewsRepository;
 use Plugin\SampleRssFeed\Repository\ConfigRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class NewsFeedController extends AbstractController
@@ -45,9 +46,6 @@ class NewsFeedController extends AbstractController
 
     /**
      * @Route("/news_feed.xml", name="sample_rss_feed_news")
-     * @Template("@SampleRssFeed/news.xml.twig")
-     *
-     * @return array
      */
     public function feed()
     {
@@ -70,8 +68,13 @@ class NewsFeedController extends AbstractController
             ->getQuery()
             ->getResult();
 
-        return [
-            'news' => $news,
-        ];
+        $response = new Response();
+        $response->headers->set('Content-Type', 'application/xml; charset=UTF-8');
+
+        return $this->render(
+            '@SampleRssFeed/news.xml.twig',
+            ['news' => $news],
+            $response
+        );
     }
 }
