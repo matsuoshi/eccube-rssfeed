@@ -1,0 +1,10 @@
+{# 件数指定はどこで変更する？ #}
+{# xmlとしてのレスポンスヘッダの設定はどこでやる？ #}
+
+{% for product in products %}
+<div>
+    {{ product.id }}
+    {{ product.name }}
+    {{ product.create_date|date('Y-m-d H:i:s') }}
+</div>
+{% endfor %}

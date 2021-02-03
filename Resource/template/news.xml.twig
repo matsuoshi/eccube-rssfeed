@@ -1,0 +1,11 @@
+{# 件数指定はどこでやる？ #}
+{# xmlとしてのレスポンスヘッダの設定はどこでやる？ #}
+
+{% for article in news %}
+<div>
+    {{ article.publish_date|date('Y-m-d H:i:s') }}
+    {{ article.title }}
+    <br>
+    {{ article.url }}
+</div>
+{% endfor %}
