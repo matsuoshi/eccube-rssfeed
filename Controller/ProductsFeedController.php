@@ -2,28 +2,57 @@
 
 namespace Plugin\SampleRssFeed\Controller;
 
-use Eccube\Controller\ProductController;
-use Knp\Component\Pager\Paginator;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\HttpFoundation\Request;
+use Eccube\Controller\AbstractController;
+use Eccube\Repository\ProductRepository;
+use Plugin\SampleRssFeed\Repository\ConfigRepository;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class ProductsFeedController extends ProductController
+class ProductsFeedController extends AbstractController
 {
     /**
-     * @Route("/products_feed.xml", name="sample_rss_feed_products")
-     * @Template("@SampleRssFeed/products.xml.twig")
-     *
-     * @param Request $request
-     * @param Paginator $paginator
-     * @return array
+     * @var ProductRepository
      */
-    public function index(Request $request, Paginator $paginator): array
-    {
-        $products = parent::index($request, $paginator);
+    protected $productRepository;
 
-        return [
-            'products' => $products['pagination'],
-        ];
+    /**
+     * @var ConfigRepository
+     */
+    protected $configRepository;
+
+    /**
+     * NewsController constructor.
+     *
+     * @param ProductRepository $productRepository
+     * @param ConfigRepository $configRepository
+     */
+    public function __construct(ProductRepository $productRepository, ConfigRepository $configRepository)
+    {
+        $this->productRepository = $productRepository;
+        $this->configRepository = $configRepository;
+    }
+
+    /**
+     * @Route("/products_feed.xml", name="sample_rss_feed_products")
+     */
+    public function feed()
+    {
+        $products = $this->productRepository->findBy(
+            ['Status' => 1],
+            [
+                'create_date' => 'DESC',
+                'id' => 'DESC',
+            ],
+            $this->configRepository->getFeedLength()
+        );
+
+        $response = new Response();
+        $response->headers->set('Content-Type', 'application/xml; charset=UTF-8');
+
+        return $this->render(
+            '@SampleRssFeed/products.xml.twig',
+            ['products' => $products],
+            $response
+        );
     }
 }

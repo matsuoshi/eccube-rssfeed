@@ -13,12 +13,12 @@ class Event implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            'default_frame.twig' => 'addRssFeedMeta',
+            'default_frame.twig' => 'addRssFeedLink',
         ];
     }
 
-    public function addRssFeedMeta(TemplateEvent $event)
+    public function addRssFeedLink(TemplateEvent $event)
     {
-        $event->addAsset('@SampleRssFeed/meta.twig');
+        $event->addAsset('@SampleRssFeed/head_link.twig');
     }
 }

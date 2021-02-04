@@ -16,7 +16,9 @@
                 {% endif %}
                 <pubDate>{{ article.publish_date|date(constant('DATE_RFC822')) }}</pubDate>
                 <guid>{{ url('homepage') }}rss/news/{{ article.id }}</guid>
-                <description><![CDATA[ {{ article.description|raw }} ]]></description>
+                <description><![CDATA[
+                    {{ article.description|raw }}
+                ]]></description>
             </item>
         {% endfor %}
     </channel>

@@ -1,10 +1,24 @@
-{# 件数指定はどこで変更する？ #}
-{# xmlとしてのレスポンスヘッダの設定はどこでやる？ #}
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>{{ BaseInfo.shop_name }}</title>
+        <link>{{ url('homepage') }}</link>
+        <lastBuildDate>{{ "now" | date(constant('DATE_RFC822')) }}</lastBuildDate>
+        <atom:link href="{{ url('sample_rss_feed_products') }}" rel="self"/>
 
-{% for product in products %}
-<div>
-    {{ product.id }}
-    {{ product.name }}
-    {{ product.create_date|date('Y-m-d H:i:s') }}
-</div>
-{% endfor %}
+        {% for product in products %}
+            <item>
+                <title>{{ product.name }}</title>
+                <link>{{ url('product_detail', {'id': product.id}) }}</link>
+                <pubDate>{{ product.create_date|date(constant('DATE_RFC822')) }}</pubDate>
+                <guid>{{ url('homepage') }}rss/products/{{ product.id }}</guid>
+                <description><![CDATA[
+                    {{ product.description_detail }}
+                ]]></description>
+                <image>
+                    <url>{{ absolute_url(asset(product.main_list_image|no_image_product, 'save_image')) }}</url>
+                </image>
+            </item>
+        {% endfor %}
+    </channel>
+</rss>
