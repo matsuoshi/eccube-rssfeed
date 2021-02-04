@@ -2,6 +2,7 @@
 
 namespace Plugin\SampleRssFeed;
 
+use Eccube\Event\TemplateEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class Event implements EventSubscriberInterface
@@ -11,6 +12,13 @@ class Event implements EventSubscriberInterface
      */
     public static function getSubscribedEvents()
     {
-        return [];
+        return [
+            'default_frame.twig' => 'addRssFeedMeta',
+        ];
+    }
+
+    public function addRssFeedMeta(TemplateEvent $event)
+    {
+        $event->addAsset('@SampleRssFeed/meta.twig');
     }
 }
