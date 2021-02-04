@@ -52,11 +52,11 @@ class NewsFeedController extends AbstractController
 
         $builder = $this->newsRepository->createQueryBuilder('news');
         $news = $builder
-            ->where('news.visible = ?1')
-            ->andWhere($builder->expr()->lte('news.publish_date', '?2'))
+            ->where('news.visible = :visible')
+            ->andWhere($builder->expr()->lte('news.publish_date', ':now'))
             ->setParameters([
-                1 => true,
-                2 => new \DateTime(),
+                'visible' => true,
+                'now' => new \DateTime(),
             ])
             ->orderBy('news.publish_date', 'DESC')
             ->addOrderBy('news.id', 'DESC')

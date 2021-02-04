@@ -3,7 +3,7 @@
     <channel>
         <title>{{ BaseInfo.shop_name }}</title>
         <link>{{ url('homepage') }}</link>
-        <lastBuildDate>{{ "now" | date('D, d M y H:i:s O') }}</lastBuildDate>
+        <lastBuildDate>{{ "now" | date(constant('DATE_RFC822')) }}</lastBuildDate>
         <atom:link href="{{ url('sample_rss_feed_news') }}" rel="self"/>
 
         {% for article in news %}
@@ -14,7 +14,7 @@
                 {% else %}
                     <link>{{ url('homepage') }}</link>
                 {% endif %}
-                <pubDate>{{ article.publish_date|date('D, d M y H:i:s O') }}</pubDate>
+                <pubDate>{{ article.publish_date|date(constant('DATE_RFC822')) }}</pubDate>
                 <guid>{{ url('homepage') }}rss/news/{{ article.id }}</guid>
                 <description><![CDATA[ {{ article.description|raw }} ]]></description>
             </item>
